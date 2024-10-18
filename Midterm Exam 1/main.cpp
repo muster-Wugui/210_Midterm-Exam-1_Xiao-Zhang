@@ -170,6 +170,7 @@ public:
                 cout << temp->data << " ";  // Print if not skipping
             }
             flag = !flag;  // Change the flag
+            temp = temp->next;  // Move to next node
         }
         cout << endl;
     }
