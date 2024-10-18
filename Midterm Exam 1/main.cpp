@@ -23,13 +23,13 @@ private:
             next = n;     // to set next pointer
         }
     };
-
+    
     Node* head;  // This is a pointer which is the start of the list
     Node* tail;  // This is a pointer which is the end of the list
-
+    
 public:
     DoublyLinkedList() { head = nullptr; tail = nullptr; }  // Initialize empty list
-
+    
     // This function aim to insert value in a specific position
     void insert_after(int value, int position) {
         if (position < 0) {
@@ -78,7 +78,7 @@ public:
             tail = temp->prev;  // Update tail if last node is deleted
         delete temp;
     }
-
+    
     // Delete node at a given position
     void delete_pos(int pos) {
         if (!head) {
@@ -107,7 +107,7 @@ public:
         temp->next->prev = temp->prev;
         delete temp;
     }
-
+    
     // Add a node at the end of the list
     void push_back(int v) {
         Node* newNode = new Node(v);
@@ -119,7 +119,7 @@ public:
             tail = newNode;  // Update tail
         }
     }
-
+    
     // Add a node at the front of the list
     void push_front(int v) {
         Node* newNode = new Node(v);
@@ -131,7 +131,7 @@ public:
             head = newNode;  // Update head
         }
     }
-
+    
     // Remove the first node
     void pop_front() {
         if (!head) {
@@ -146,7 +146,7 @@ public:
             head = tail = nullptr;  // List becomes empty
         delete temp;
     }
-
+    
     // Remove the last node
     void pop_back() {
         if (!tail) {
@@ -161,3 +161,74 @@ public:
             head = tail = nullptr;  // List becomes empty
         delete temp;
     }
+    // Method to print every other element
+    void every_other_element() {
+        Node* temp = head;  // Start from head
+        bool flag = false;  // use a flag variable to tag the skipping elements
+        while (temp) {
+            if (!flag){
+                cout << temp->data << " ";  // Print if not skipping
+            }
+            flag = !flag;  // Change the flag
+        }
+        cout << endl;
+    }
+
+    // Print all elements in order
+    void print() {
+        Node* current = head;
+        if (!current) {
+            cout << "List is empty." << endl;
+            return;
+        }
+        while (current) {
+            cout << current->data << " ";
+            current = current->next;
+        }
+        cout << endl;
+    }
+
+    // Print all elements in reverse order
+    void print_reverse() {
+        Node* current = tail;
+        if (!current) {
+            cout << "List is empty." << endl;
+            return;
+        }
+        while (current) {
+            cout << current->data << " ";
+            current = current->prev;
+        }
+        cout << endl;
+    }
+
+    // Destructor to free the memory
+    ~DoublyLinkedList() {
+        while (head) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+        }
+    }
+};
+
+int main() {
+    DoublyLinkedList myList;
+    myList.push_back(1);
+    myList.push_back(2);
+    myList.push_back(3);
+    myList.push_back(4);
+    myList.push_back(5);
+
+    cout << "Original elements: ";
+    myList.print();  // This should print: 1 2 3 4 5
+
+    cout << "Every other element: ";
+    myList.every_other_element();  // This should print: 1 3 5
+
+    myList.delete_val(3);
+    cout << "Elements after deleting 3: ";
+    myList.print();  // This should print: 1 2 4 5
+
+    return 0;
+}
